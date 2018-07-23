@@ -1,24 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.anas.zagel">
+
+    <!-- permissions that must be granted ! -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+
+        <!-- we need to include api key inside manifest -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBe6jwWmCXjLUKc-s-2BZQUmA6ulv_Occk" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="26.1.0"
+            tools:replace="android:value" />
+
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activities.UserInfoActivites.UserTypeActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name=".Activities.HomeActivities.DeliveryHomeActivity" />
+        <activity android:name=".Activities.UserInfoActivites.DeliveryManExtraInfoActivity" />
+        <activity android:name=".Activities.UserInfoActivites.BasicInfoActivity" />
+        <activity android:name=".Activities.UserProfileActivites.ProfileActivity" />
+        <activity android:name=".Activities.UserProfileActivites.EditProfileActivity" />
+        <activity android:name=".Activities.HomeActivities.CustomerHomeActivity" />
+        <activity android:name=".Activities.AccountSettingsActivity" />
+        <activity android:name=".Activities.UserInfoActivites.FirstBasicInfoActivity" />
+        <activity android:name=".Activities.priceActivity" />
+        <activity android:name=".Activities.OrderPackageActivities.OrderPackageDetailsActivity" />
+        <activity android:name=".Activities.OrderPackageActivities.OrderPackageMapActivity" />
+
+        <service android:name=".MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".FromLocationToSourceActivity" />
+        <activity android:name=".FromSourceToDestinationActivity" />
+        <activity android:name=".Activities.OrderPackageActivities.PackageOnTheWayActivity" />
+        <activity android:name=".Activities.OrderPackageActivities.WaitingForDeliverymanAcceptanceActivity" />
+        <activity android:name=".NewOrderedPackageActivity"></activity>
     </application>
 
 </manifest>

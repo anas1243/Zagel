@@ -1,14 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "com.example.anas.zagel"
-        minSdkVersion 23
-        targetSdkVersion 28
+        minSdkVersion 19
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -17,13 +19,69 @@ android {
         }
     }
 }
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
-    implementation 'com.android.support:design:28.0.0-alpha3'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    androidTestImplementation 'junit:junit:4.12'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
+
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-places:15.0.1'
+
+    //forLatLngBounds
+
+    implementation 'com.google.maps.android:android-maps-utils:0.4.4'
+    //Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-database:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.2'
+    implementation 'com.firebaseui:firebase-ui-auth:3.2.2'
+    implementation 'com.google.firebase:firebase-storage:16.0.1'
+    //Allows firebase notifications from the firebase console as well as msgs from firebase cloud msgs.
+    implementation 'com.google.firebase:firebase-messaging:17.1.0'
+    implementation 'com.google.firebase:firebase-config:16.0.0'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:support-v4:27.1.1'
+    implementation "com.android.support:recyclerview-v7:27.1.1"
+    implementation "com.android.support:support-annotations:27.1.1"
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+
+    //circle
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.github.FlyingPumba:SimpleRatingBar:v0.1.5'
+    implementation 'jp.wasabeef:blurry:2.1.1'
+    implementation "com.android.support:customtabs:27.1.1"
+
+    //Butter-Knife
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    //rating
+
+
+    implementation('com.mikepenz:materialdrawer:5.9.5@aar') {
+        transitive = true
+        exclude group: 'com.android.support'
+        implementation 'com.hyman:flowlayout-lib:1.1.2'
+    }
+
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
+
+    //sliding up step view
+    implementation 'com.stepstone.stepper:material-stepper:4.3.1'
+
+
 }
+apply plugin: 'com.google.gms.google-services'
