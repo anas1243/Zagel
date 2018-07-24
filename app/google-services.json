@@ -1,0 +1,223 @@
+{
+  "project_info": {
+    "project_number": "516031479806",
+    "firebase_url": "https://yala-delivery.firebaseio.com",
+    "project_id": "yala-delivery",
+    "storage_bucket": "yala-delivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516031479806:android:52afafb6ff54bc41",
+        "android_client_info": {
+          "package_name": "com.example.anas.googlemapbasic0"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516031479806-3bqqnpo5ssv21n0fr9gvecmbtvr4mf6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anas.googlemapbasic0",
+            "certificate_hash": "3a0bdbbd18dadb1276a5ec6844fe85bbc65180b3"
+          }
+        },
+        {
+          "client_id": "516031479806-q6ocsrjuce062fn7a6jmkorri5ognc2f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anas.googlemapbasic0",
+            "certificate_hash": "fc666923344106ae6d3de05548477d6836aa4c69"
+          }
+        },
+        {
+          "client_id": "516031479806-ngg2ggdjairtbn44hf4ahde9pdf2fvqc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anas.googlemapbasic0",
+            "certificate_hash": "1a258996ac999c149cd6ccaa1ebebc5068b1791d"
+          }
+        },
+        {
+          "client_id": "516031479806-75rpcdsjvk6io370pdsq4uacoip2oi7o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anas.googlemapbasic0",
+            "certificate_hash": "fb4a6705ed6d892fb8de648c002a7ae3aa588911"
+          }
+        },
+        {
+          "client_id": "516031479806-sf0kob9nj3hvi7nl0pbr2h2mp4rvf504.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrJsCxBuoD6fzSZCBOVDqJAFNzboKgDg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516031479806-sf0kob9nj3hvi7nl0pbr2h2mp4rvf504.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516031479806:android:aca9c217fb6121b5",
+        "android_client_info": {
+          "package_name": "com.example.anas.zagel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516031479806-gr0sem809eakk5njb16u4jcnh6hl43nk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anas.zagel",
+            "certificate_hash": "3a0bdbbd18dadb1276a5ec6844fe85bbc65180b3"
+          }
+        },
+        {
+          "client_id": "516031479806-lh3ggn6qin222i1t5q391gnbo1bh1ttb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.anas.zagel",
+            "certificate_hash": "db52eccf89797aab125a4b81b779bedbd3881b5e"
+          }
+        },
+        {
+          "client_id": "516031479806-sf0kob9nj3hvi7nl0pbr2h2mp4rvf504.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrJsCxBuoD6fzSZCBOVDqJAFNzboKgDg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516031479806-sf0kob9nj3hvi7nl0pbr2h2mp4rvf504.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516031479806:android:2197bdbc977a8bfd",
+        "android_client_info": {
+          "package_name": "com.example.eltobgy.yala"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516031479806-713dct16bltqo3h94p9sdceqd3jlflau.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "80195b7255176b00e11e062c7bfb2609b2a2e23a"
+          }
+        },
+        {
+          "client_id": "516031479806-cl8b9eirorqqfg2dctcq3p2l7nsdnm95.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "fc666923344106ae6d3de05548477d6836aa4c69"
+          }
+        },
+        {
+          "client_id": "516031479806-r6dptshqi8sgsbt1bcs6kn13ka1or8tc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "3a0bdbbd18dadb1276a5ec6844fe85bbc65180b3"
+          }
+        },
+        {
+          "client_id": "516031479806-tjlv0rppslpo28accrj6avl8cv1uidjg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "1a258996ac999c149cd6ccaa1ebebc5068b1791d"
+          }
+        },
+        {
+          "client_id": "516031479806-r02fjl8kde5k9lmrdi87jbnfmd2fdt20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "fb4a6705ed6d892fb8de648c002a7ae3aa588911"
+          }
+        },
+        {
+          "client_id": "516031479806-gdlup9e5ruq82csh65q2g217b4cjrgb2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "cc2f53476978ddc78639e66a57fdf716cf98f9ad"
+          }
+        },
+        {
+          "client_id": "516031479806-lv8cgm9d7m31cjlk44g14ri9ikclcq26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eltobgy.yala",
+            "certificate_hash": "db52eccf89797aab125a4b81b779bedbd3881b5e"
+          }
+        },
+        {
+          "client_id": "516031479806-sf0kob9nj3hvi7nl0pbr2h2mp4rvf504.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjrJsCxBuoD6fzSZCBOVDqJAFNzboKgDg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516031479806-sf0kob9nj3hvi7nl0pbr2h2mp4rvf504.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

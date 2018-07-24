@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:minHeight="177dp"
+        tools:context=".ProfileActivity">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/clouds_background" />
+
+        <include
+            layout="@layout/toolbar_navdrawer"></include>
+
+        <RelativeLayout
+            android:id="@+id/layout_profile_image_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_image"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:clickable="true"
+                android:elevation="5dp"
+                android:padding="24dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_placeholder"
+                app:civ_border_color="#FFFFFFFF"
+                app:civ_border_width="3dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignBottom="@+id/iv_profile_image"
+                android:layout_marginBottom="26dp"
+                android:layout_marginStart="36dp"
+                android:elevation="10dp"
+                android:src="@mipmap/ic_edit_image" />
+
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/et_name_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:text=""
+            android:textColor="#fff"
+            android:textSize="@dimen/profile_text_size"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_profile_image_profile" />
+
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/rb_rating_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_name_edit_profile"
+            app:srb_borderColor="@android:color/white"
+            app:srb_fillColor="@color/colorSecondary"
+            app:srb_isIndicator="true"
+            app:srb_numberOfStars="5"
+            app:srb_rating="0"
+            app:srb_starBorderWidth="2"
+            app:srb_starCornerRadius="4"
+            app:srb_stepSize="1" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rb_rating_profile">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp">
+
+                <ImageButton
+                    android:id="@+id/update_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/email_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Email: "
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:inputType="none"
+                    android:text=""
+                    app:layout_constraintLeft_toRightOf="@+id/email_label" />
+
+                <TextView
+                    android:id="@+id/birth_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Birth Date: "
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/email_label" />
+
+                <TextView
+                    android:id="@+id/tv_birth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:editable="false"
+                    android:text=""
+                    app:layout_constraintLeft_toRightOf="@+id/birth_label"
+                    app:layout_constraintTop_toTopOf="@+id/birth_label" />
+
+                <TextView
+                    android:id="@+id/gender_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:text="Gender: "
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/birth_label" />
+
+                <TextView
+                    android:id="@+id/tv_gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:editable="false"
+                    android:text=""
+                    app:layout_constraintLeft_toRightOf="@+id/gender_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_birth" />
+
+
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>
