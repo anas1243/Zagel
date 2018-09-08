@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class UserTypeActivity extends AppCompatActivity {
+    private static final String TAG = "UserTypeActivity";
     User currentUser = MainActivity.currentUser;
     DatabaseReference mDatabaseReference = MainActivity.mDatabaseUsersReference;
     FirebaseDatabase mDatabase = MainActivity.mDatabase;
@@ -85,15 +87,17 @@ public class UserTypeActivity extends AppCompatActivity {
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
+            Log.e(TAG, "isGPSopened:lm.LocationManager.GPS_PROVIDER null pointer exception");
         }
 
         try {
             network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch (Exception ex) {
+            Log.e(TAG, "isGPSopened:lm.LocationManager.NETWORK_PROVIDER null pointer exception");
         }
 
         if (!gps_enabled) {
-            //TODO ckeck for the connectivity
+            //TODO check for the connectivity
             showSettingsAlert();
         }
     }

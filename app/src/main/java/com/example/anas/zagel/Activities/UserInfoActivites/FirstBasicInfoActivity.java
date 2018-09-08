@@ -10,14 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.anas.zagel.Activities.MainActivity;
 import com.example.anas.zagel.Models.User;
 import com.example.anas.zagel.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -33,6 +33,7 @@ public class FirstBasicInfoActivity extends AppCompatActivity {
     private Uri filePath;
     private EditText nameEditText;
     private CircleImageView imageView;
+    private UploadTask uploadTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,32 +93,41 @@ public class FirstBasicInfoActivity extends AppCompatActivity {
             currentUser.setName(name);
 
             final StorageReference ref = MainActivity.storageReference.child("profile_images/" + UUID.randomUUID().toString());
-            ref.putFile(filePath)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            progressDialog.dismiss();
-                            currentUser.setPhotoUrl(ref.getDownloadUrl().toString());
-                            Intent intent = new Intent(FirstBasicInfoActivity.this, BasicInfoActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Toast.makeText(FirstBasicInfoActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
-                                    .getTotalByteCount());
-                            progressDialog.setMessage((int) progress + "%" + "uploaded");
-                        }
-                    });
+            uploadTask = ref.putFile(filePath);
+
+            Task<Uri> urlTask = uploadTask.addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                            .getTotalByteCount());
+                    progressDialog.setMessage((int) progress + "%" + "uploaded");
+                }
+            }).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return ref.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        Uri downloadUri = task.getResult();
+                        currentUser.setPhotoUrl(downloadUri.toString());
+                        Intent intent = new Intent(FirstBasicInfoActivity.this, BasicInfoActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // Handle failures
+                        // ...
+                    }
+
+                }
+            });
         } else {
 
             Snackbar snackbar = Snackbar

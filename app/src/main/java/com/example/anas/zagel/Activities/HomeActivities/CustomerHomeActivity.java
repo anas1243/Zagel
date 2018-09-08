@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,7 +38,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBufferResponse;
@@ -64,7 +62,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.SphericalUtil;
 import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +70,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.anas.zagel.Activities.MainActivity.currentUser;
 import static com.example.anas.zagel.Activities.MainActivity.mDatabaseOnlineDeliverymenReference;
@@ -93,35 +89,28 @@ public class CustomerHomeActivity extends AppCompatActivity implements Direction
     );
     private static final int ERROR_DIALOG_REQUEST = 9001;
     public static String vehicle = "driving";
+
+    private int setLocation = 0;
+
     //Firebase
-    //public static DatabaseReference mDatabasePackRef;
     public static String userId, name, email;
     public static ArrayList<OnlineDeliveryMan> onlineDeliveryMenList = new ArrayList();
-    // public View v = getLayoutInflater().inflate(R.layout.infowindow_layout, null);
     DatabaseReference mDatabasePackRef = MainActivity.mDatabasePackRef;
     FirebaseDatabase mDatabase = MainActivity.mDatabase;
     DatabaseReference mDatabaseReference = MainActivity.mDatabaseUsersReference;
+
     //Widgets
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     DrawerUtil drawer;
-    //private View mapView =getLayoutInflater().inflate(R.layout.activity_map ,null);
-    // private View yallaPackageOrder =getLayoutInflater().inflate(R.layout.order_package_details ,null);
     SimpleRatingBar ratingBar;
-    CircleImageView DeliveryMAnImageView;
-    SlidingUpPanelLayout mSlidingLayout;
-    int setLocation = 0;
-    private AutoCompleteTextView mSearchText1;
-    private AutoCompleteTextView mSearchText2;
+
     private ImageView mGps;  // get location
     private ImageView mGpss;  // set location to source textbox
     private ImageView mGpsd;  // set location to destination textbox
-    private Button driving;
-    private Button walking;
 
     // private image view for marker
-    private ImageView markerImageView;
-    private ImageView markerIcon;
+
     //Vars
     private boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
@@ -141,48 +130,20 @@ public class CustomerHomeActivity extends AppCompatActivity implements Direction
     //private GoogleApiClient mGoogleApiClient;
     private GeoDataClient mGeoDataClient;
     private PlaceDetectionClient mPlaceDetectionClient;
-    private AdapterView.OnItemClickListener mAutoCompleteClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            hideSoftKeyboard();
-            final AutocompletePrediction item = mPlaceAutoCompleteAdapter.getItem(i);
-            Log.e(TAG, "onItemClick: heyyyyyyyyyyyyyyyyyyyyy1111y");
-
-            final String placeId = item.getPlaceId();
-
-            //but this method  is not effective :/
-            //final String PlaceName = item.getPrimaryText(null).toString();
-            //geoLocate(PlaceName);
-
-            Log.e(TAG, "onItemClick: heyyyyyyyyyyyyyyyyyyyyyy");
-            Log.e(TAG, "onItemClick: you have clicked on this location" + placeId);
-
-            geoLocateById(placeId);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sliding_up_panel);
+
         mGps = findViewById(R.id.ic_gps);
-        //  View yallaPackageOrder =getLayoutInflater().inflate(R.layout.order_package_details ,null);
-
-
         mGpss = findViewById(R.id.ic_gps);
         mGpsd = findViewById(R.id.ic_gps);
-        //mSearchText1 = findViewById(R.id.input_search1);
-        //mSearchText2 = findViewById(R.id.input_search2);
-        //driving = findViewById(R.id.driving);
-        //walking = findViewById(R.id.walking);
 
-        //btnFindPath = findViewById(R.id.btnFindPath);
         orderButton = findViewById(R.id.btn_order_sliding_up_panel);
         orderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //View layout = findViewById(R.id.sliding_layout_fragment);
-                //layout.remo
                 Intent intent = new Intent(CustomerHomeActivity.this, OrderPackageDetailsActivity.class);
                 startActivity(intent);
             }

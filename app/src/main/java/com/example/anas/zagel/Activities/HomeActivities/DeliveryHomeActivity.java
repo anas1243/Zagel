@@ -9,10 +9,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.location.Address;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.RingtoneManager;
@@ -26,20 +23,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.anas.zagel.Activities.MainActivity;
-import com.example.anas.zagel.Adaptors.PlaceAutocompleteAdapter;
 import com.example.anas.zagel.Models.OnlineDeliveryMan;
 import com.example.anas.zagel.Models.Package;
-import com.example.anas.zagel.Modules.DirectionFinder;
-import com.example.anas.zagel.Modules.DirectionFinderListener;
-import com.example.anas.zagel.Modules.Route;
 import com.example.anas.zagel.NewOrderedPackageActivity;
 import com.example.anas.zagel.R;
 import com.example.anas.zagel.Utilities.DrawerUtil;
@@ -49,11 +40,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBufferResponse;
-import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -62,9 +49,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -72,19 +57,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class DeliveryHomeActivity extends AppCompatActivity implements DirectionFinderListener, OnMapReadyCallback,
+public class DeliveryHomeActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private static final String TAG = "CustomerHomeActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -111,19 +92,13 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     DrawerUtil drawer;
-    //private View mapView =getLayoutInflater().inflate(R.layout.activity_map ,null);
-    // private View yallaPackageOrder =getLayoutInflater().inflate(R.layout.order_package_details ,null);
-    SlidingUpPanelLayout mSlidingLayout;
+
     //Vars
     private ImageView mGps;  // get location
-    private Button driving;
-    private Button walking;
     private boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
     private FusedLocationProviderClient mfusedLocationProviderClient;
-    private PlaceAutocompleteAdapter mPlaceAutoCompleteAdapter;
     //direction vars
-    private Button btnFindPath;
     private List<Marker> originMarkers = new ArrayList<>();
     private List<Marker> destinationMarkers = new ArrayList<>();
     private List<Polyline> polylinePaths = new ArrayList<>();
@@ -132,59 +107,26 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
 
     private LocationManager locationManager;
     private String provider;
-
-
-    //private GoogleApiClient mGoogleApiClient;
     private GeoDataClient mGeoDataClient;
-    private PlaceDetectionClient mPlaceDetectionClient;
-    private AdapterView.OnItemClickListener mAutoCompleteClickListener = new AdapterView.OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            hideSoftKeyboard();
-            final AutocompletePrediction item = mPlaceAutoCompleteAdapter.getItem(i);
-            Log.e(TAG, "onItemClick: heyyyyyyyyyyyyyyyyyyyyy1111y");
-
-            final String placeId = item.getPlaceId();
-
-            //but this method  is not effective :/
-            //final String PlaceName = item.getPrimaryText(null).toString();
-            //geoLocate(PlaceName);
-
-            Log.e(TAG, "onItemClick: heyyyyyyyyyyyyyyyyyyyyyy");
-            Log.e(TAG, "onItemClick: you have clicked on this location" + placeId);
-
-            geoLocateById(placeId);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivary_home);
         mGps = findViewById(R.id.ic_gps);
-        //  View yallaPackageOrder =getLayoutInflater().inflate(R.layout.order_package_details ,null);
-        //btnFindPath = findViewById(R.id.btnFindPath);
-
-
-        //initializing package database reference
-        //mDatabasePackRef = mDatabase.getReference().child("orders");
 
         // Construct a GeoDataClient.
         mGeoDataClient = Places.getGeoDataClient(this);
 
-        // Construct a PlaceDetectionClient.
-        mPlaceDetectionClient = Places.getPlaceDetectionClient(this);
         ButterKnife.bind(this);
         // toolbar.setLogo(R.drawable.logo);
         setSupportActionBar(toolbar);
-
         drawer = new DrawerUtil(MainActivity.currentUser.getName(), MainActivity.currentUser.getEmail());
         drawer.getDrawer(DeliveryHomeActivity.this, toolbar);
  
         getLocationPermission();
         selectVehicle();
         listenToOrderedPackage();
-
     }
 
 
@@ -220,7 +162,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
         if (mLocationPermissionGranted) {
             getDeviceLocation();
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "location bitch !", Toast.LENGTH_SHORT).show();
                 return;
             }
             //the location button on the upper right ^^
@@ -229,7 +170,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
             // mMap.getUiSettings().setMyLocationButtonEnabled(true);
             //also you can play around with UiSettings
             //mMap.getUiSettings().setMapToolbarEnabled(true);
-            Toast.makeText(this, "halla walahhay !", Toast.LENGTH_SHORT).show();
             init();
         }
     }
@@ -267,7 +207,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
             }
         }
     }
-
     private void getDeviceLocation() {
         Log.e(TAG, "getDeviceLocation: getting the devices current location");
         mfusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -291,7 +230,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
 
                                 MainActivity.mDatabaseOnlineDeliverymenReference.child(onlineDeliveryMan.getId()).setValue(onlineDeliveryMan);
                                 Log.e(TAG, "Latlng " + delivaryManLocation.getLat() + " " + delivaryManLocation.getLng() + "");
-                                //Calling PackageListener Function inorder to check if the online deliveryman has a package or not
 
                             }
                         } else {
@@ -303,22 +241,22 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
 
                 this.locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-//Choosing the best criteria depending on what is available.
+                //Choosing the best criteria depending on what is available.
                 Criteria criteria = new Criteria();
                 provider = locationManager.getBestProvider(criteria, false);
                 //provider = LocationManager.GPS_PROVIDER; // We want to use the GPS
 
-// Initialize the location fields
+                // Initialize the location fields
                 Location llocation = locationManager.getLastKnownLocation(provider);
-
-
-
 
             }
         } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: SecurityException" + e.getMessage());
         }
     }
+
+
+
 
     private void listenToOrderedPackage() {
         currentOnlineDeliverymanReference = MainActivity.mDatabaseOnlineDeliverymenReference.child(MainActivity.currentUser.getId());
@@ -407,29 +345,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
             }
         });
         hideSoftKeyboard();
-
-
-
-    }
-
-    private void geoLocate(AutoCompleteTextView tv) {
-        Log.e(TAG, "geoLocate: GeoLocating");
-        String searchSting = tv.getText().toString();
-        Geocoder geocoder = new Geocoder(DeliveryHomeActivity.this);
-        List<Address> list = new ArrayList<>();
-        try {
-            list = geocoder.getFromLocationName(searchSting, 1);
-
-        } catch (IOException e) {
-            Log.e(TAG, "geoLocate: IOExeception:" + e.getMessage());
-        }
-        if (list.size() > 0) {
-            Address address = list.get(0);
-            Log.e(TAG, "geoLocate: found a location " + address.toString());
-            moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), DEFAULT_ZOOM, address.getAddressLine(0));
-            hideSoftKeyboard();
-        }
-
     }
 
     private void getLocationPermission() {
@@ -452,26 +367,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
         } else {
             ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMESSION_REQUEST_CODE);
         }
-
-
-    }
-
-    private void geoLocateById(String placeID) {
-        mGeoDataClient.getPlaceById(placeID).addOnCompleteListener(new OnCompleteListener<PlaceBufferResponse>() {
-            @SuppressLint("RestrictedApi")
-            @Override
-            public void onComplete(@NonNull Task<PlaceBufferResponse> task) {
-                if (task.isSuccessful()) {
-                    PlaceBufferResponse places = task.getResult();
-                    @SuppressLint("RestrictedApi") Place myPlace = places.get(0);
-                    Log.e(TAG, "Place found: " + myPlace.getName());
-                    moveCamera(myPlace.getLatLng(), DEFAULT_ZOOM, myPlace.getName().toString());
-                    places.release();
-                } else {
-                    Log.e(TAG, "Place not found.");
-                }
-            }
-        });
     }
 
     private void hideSoftKeyboard() {
@@ -479,128 +374,6 @@ public class DeliveryHomeActivity extends AppCompatActivity implements Direction
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-
-    //fuctions for directions and durations
-
-    private void sendRequest() {
-        String origin = "";  // from firebase //
-        String destination = ""; // from firebase //
-        if (origin.isEmpty()) {
-            Toast.makeText(this, "Please enter origin address!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (destination.isEmpty()) {
-            Toast.makeText(this, "Please enter destination address!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        try {
-            new DirectionFinder(DeliveryHomeActivity.this, origin, destination, vehicle).execute();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public void onDirectionFinderStart() {
-        progressDialog = ProgressDialog.show(this, "Please wait.",
-                "Finding direction..!", true);
-
-        if (originMarkers != null) {
-            for (Marker marker : originMarkers) {
-                marker.remove();
-            }
-        }
-
-        if (destinationMarkers != null) {
-            for (Marker marker : destinationMarkers) {
-                marker.remove();
-            }
-        }
-
-        if (polylinePaths != null) {
-            for (Polyline polyline : polylinePaths) {
-                polyline.remove();
-            }
-        }
-    }
-
-    @Override
-    public void onDirectionFinderSuccess(List<Route> routes) {
-        progressDialog.dismiss();
-        polylinePaths = new ArrayList<>();
-        originMarkers = new ArrayList<>();
-        destinationMarkers = new ArrayList<>();
-        int j = routes.size() - 1;
-        for (int k = routes.size() - 1; k != -1; k--) {
-            if (j != 0) {
-                PolylineOptions polylineOptions = new PolylineOptions().
-                        geodesic(true).
-                        color(Color.GRAY).
-                        width(10);
-                for (int i = 0; i < routes.get(k).points.size(); i++) {
-
-                    polylineOptions.add(routes.get(k).points.get(i));
-                }
-
-                polylinePaths.add(mMap.addPolyline(polylineOptions));
-                j--;
-                continue;
-            }
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(routes.get(k).startLocation, 17));
-            /*((TextView) findViewById(R.id.tvDuration)).setText(routes.get(k).duration.text);
-            ((TextView) findViewById(R.id.tvDistance)).setText(routes.get(k).distance.text);
-*/
-            originMarkers.add(mMap.addMarker(new MarkerOptions()
-                    .title(routes.get(k).startAddress)
-                    .position(routes.get(k).startLocation).draggable(true)));
-            destinationMarkers.add(mMap.addMarker(new MarkerOptions()
-
-                    .title(routes.get(k).endAddress)
-                    .position(routes.get(k).endLocation)));
-
-            PolylineOptions polylineOptions = new PolylineOptions().
-                    geodesic(true).
-                    color(Color.BLUE).
-                    width(10);
-
-            for (int i = 0; i < routes.get(k).points.size(); i++) {
-                polylineOptions.add(routes.get(k).points.get(i));
-            }
-
-
-            polylinePaths.add(mMap.addPolyline(polylineOptions));
-
-        }
-    }
-
-    //return full address by knowing Latlong "when we clicked on Mylocation is the source"
-
-    @SuppressLint("LongLogTag")
-    private String getCompleteAddressString(double LATITUDE, double LONGITUDE) {
-        String strAdd = "";
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(LATITUDE, LONGITUDE, 1);
-            if (addresses != null) {
-                Address returnedAddress = addresses.get(0);
-                StringBuilder strReturnedAddress = new StringBuilder("");
-
-                for (int i = 0; i <= returnedAddress.getMaxAddressLineIndex(); i++) {
-                    strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                }
-                strAdd = strReturnedAddress.toString();
-                Log.e("My Current loction address", strReturnedAddress.toString());
-            } else {
-                Log.e("My Current loction address", "No Address returned!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("My Current loction address", "Canont get Address!");
-        }
-        return strAdd;
-    }
 
 
     @Override
